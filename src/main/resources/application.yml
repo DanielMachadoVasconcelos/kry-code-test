@@ -1,0 +1,28 @@
+spring:
+  r2dbc:
+    url: "r2dbc:mysql://mysql@localhost:3306/kry"
+    name: "username"
+    password: "password"
+
+  flyway:
+    enabled: true
+    schemas: kry_service_poller
+
+server:
+  port: 8080
+
+http-methods-to-block:
+  log-level: WARN
+  methods: OPTIONS, TRACE
+
+management:
+  server:
+    port: 8081
+  endpoints:
+    enabled-by-default: true
+    web:
+      base-path: /
+      exposure:
+        include: 'health, metrics, prometheus, ping, healthcheck'
+
+
