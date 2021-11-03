@@ -1,28 +1,54 @@
-# Getting Started
+# Kry - Health Check Service 
 
-### Reference Documentation
+## Daniel Machado Vasconcelos 
 
-For further reference, please consider the following sections:
+### Basic requirements:
 
-* [Official Gradle documentation](https://docs.gradle.org)
-* [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.5.6/gradle-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.5.6/gradle-plugin/reference/html/#build-image)
-* [Spring Data R2DBC](https://docs.spring.io/spring-boot/docs/2.5.6/reference/html/spring-boot-features.html#boot-features-r2dbc)
-* [Spring Boot DevTools](https://docs.spring.io/spring-boot/docs/2.5.6/reference/htmlsingle/#using-boot-devtools)
-* [Spring Boot Actuator](https://docs.spring.io/spring-boot/docs/2.5.6/reference/htmlsingle/#production-ready)
+* A user needs to be able to add a new service with URL and a name
+* Added services have to be kept when the server is restarted
+* Display the name, url, creation time and status for each service
+* Provide a README in english with instructions on how to run the application
 
-### Guides
+Prerequisites
+-------------
+* Java JDK 11
+* Docker and Docker Compose
+* A little of Positivity! :) 
+ 
+### Architectural Decisions
 
-The following guides illustrate how to use some features concretely:
+Framework:
+Docker Compose:
+Database:
 
-* [Acessing data with R2DBC](https://spring.io/guides/gs/accessing-data-r2dbc/)
-* [Accessing data with MySQL](https://spring.io/guides/gs/accessing-data-mysql/)
-* [Building a RESTful Web Service with Spring Boot Actuator](https://spring.io/guides/gs/actuator-service/)
+## How to build?
+Clone this repo into new project folder (e.g., `kry-service-poller`).
 
-### Additional Links
+```bash
+git clone https://github.com/DanielMachadoVasconcelos/kry-code-test.git
+cd kry-code-test
+```
 
-These additional references should also help you:
+Run gradle command to build and run the tests.
+**Note:** (A docker container running MySQL database will start on your computer) 
 
-* [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
-* [R2DBC Homepage](https://r2dbc.io)
+```bash
+./gradlew clean build
+```
+
+## How to use?
+
+####Starting the Application
+```bash
+./gradlew bootRun 
+```
+
+####Check the service is running and health!  \O/ 
+```bash
+curl --request GET  --url http://localhost:8081/health 
+```
+Or
+```bash
+curl --request GET --url http://localhost:8081/ping 
+```
 
