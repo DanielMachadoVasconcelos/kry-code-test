@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
@@ -54,5 +56,11 @@ public class ServiceController {
         return repository.findById(serviceName)
                 .map(service -> service.withUri(uri))
                 .flatMap(repository::save);
+    }
+
+    @DeleteMapping("/{serviceName}")
+    @ApiOperation(value = "Deletes the service being tracked by the poller.")
+    private Mono<Void> delete(@PathVariable @NotBlank String serviceName) {
+        return repository.deleteById(serviceName);
     }
 }
