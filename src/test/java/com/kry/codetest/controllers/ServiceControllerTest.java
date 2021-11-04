@@ -1,6 +1,6 @@
 package com.kry.codetest.controllers;
 
-import com.kry.codetest.models.entities.Service;
+import com.kry.codetest.models.Service;
 import com.kry.codetest.models.requests.ServiceRequest;
 import com.kry.codetest.repositories.ServiceRepository;
 import org.junit.jupiter.api.Test;

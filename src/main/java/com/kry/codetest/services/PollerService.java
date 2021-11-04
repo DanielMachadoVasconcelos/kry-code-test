@@ -1,7 +1,7 @@
 package com.kry.codetest.services;
 
-import com.kry.codetest.models.entities.PokeResult;
-import com.kry.codetest.models.entities.Service;
+import com.kry.codetest.models.PokeResult;
+import com.kry.codetest.models.Service;
 import com.kry.codetest.repositories.PokeRepository;
 import com.kry.codetest.repositories.ServiceRepository;
 import lombok.AllArgsConstructor;
@@ -33,11 +33,11 @@ public class PollerService {
         return client.get()
                      .uri(service.getUri())
                      .exchangeToMono(response -> translateResponse(response, service))
-                     .onErrorResume(error -> Mono.just(PokeResult.fail(service.getId())));
+                     .onErrorResume(error -> Mono.just(PokeResult.fail(service)));
     }
 
     private Mono<PokeResult> translateResponse(ClientResponse response, Service service) {
         return response.statusCode().is2xxSuccessful() ?
-                Mono.just(PokeResult.success(service.getId())) : Mono.just(PokeResult.fail(service.getId()));
+                Mono.just(PokeResult.success(service)) : Mono.just(PokeResult.fail(service));
     }
 }

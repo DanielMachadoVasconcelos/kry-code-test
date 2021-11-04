@@ -1,15 +1,13 @@
 spring:
-  r2dbc:
-    url: "r2dbc:pool:mysql://localhost:3306/kry"
-    password: "password"
-    username: "user"
-
-  flyway:
-    schemas: kry
-    url: "jdbc:mysql://localhost:3306/kry"
-    user: ${spring.r2dbc.username}
-    password: ${spring.r2dbc.password}
-    baseline-on-migrate: true
+  data:
+    elasticsearch:
+      client:
+        reactive:
+          endpoints: "localhost:9200"
+  elasticsearch:
+    rest:
+      uris:
+        - "http://localhost:9200"
 
 logging:
   level:
@@ -17,6 +15,8 @@ logging:
 
 server:
   port: 8080
+  servlet:
+    context-path: /
 
 http-methods-to-block:
   log-level: WARN

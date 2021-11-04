@@ -1,8 +1,10 @@
 package com.kry.codetest.repositories;
 
-import com.kry.codetest.models.entities.PokeResult;
-import org.springframework.data.r2dbc.repository.R2dbcRepository;
+import com.kry.codetest.models.PokeResult;
+import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+import reactor.core.publisher.Flux;
 
-public interface PokeRepository extends R2dbcRepository<PokeResult, String> {
+public interface PokeRepository extends ReactiveCrudRepository<PokeResult, String> {
 
+    Flux<PokeResult> findAllByService_ServiceName(String serviceName);
 }

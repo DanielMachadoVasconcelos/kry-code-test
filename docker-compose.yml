@@ -1,20 +1,33 @@
 version: '3.3'
 services:
-
-  database:
-    image: mysql:8.0.27
-    container_name: database
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.2
+    container_name: elasticsearch
     environment:
-      MYSQL_DATABASE: 'kry'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_ROOT_PASSWORD: 'password'
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.type=single-node"
     ports:
-      - '3306:3306'
-    expose:
-      - '3306'
+      - "9200:9200"
+      - "9300:9300"
     volumes:
-      - database-volume:/var/lib/mysql
+      - database-volume:/usr/share/elasticsearch/data
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health?wait_for_status=yellow&timeout=25s || exit 1" ]
+      interval: 1s
+      timeout: 1s
+      retries: 10
+
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.4.0
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+
 
 volumes:
   database-volume:
+    driver: local
