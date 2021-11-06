@@ -1,6 +1,6 @@
-# Kry - Health Check Service 
+# Kry - Health Check Service
 
-## Daniel Machado Vasconcelos 
+## Daniel Machado Vasconcelos
 
 ### Basic requirements (that were implemented):
 
@@ -30,25 +30,27 @@
 
 Prerequisites
 -------------
+
 * Java JDK 11
 * Docker and Docker Compose
-* A little of Positivity! :) 
- 
+* A little of Positivity! :)
+
 ### Architectural Decisions
 
 Framework:
-Spring Boot with webflux, running on netty, and accessing the database with reactive repositories. 
-I noticed the exercise is driving to a reactive approach. So that is why I used Spring Boot Web Flux with Reactive JPA  
+Spring Boot with webflux, running on netty, and accessing the database with reactive repositories. I noticed the
+exercise is driving to a reactive approach. So that is why I used Spring Boot Web Flux with Reactive JPA
 
 Database:
-I think it would be nice to see the responses of the poller over time, so I saved all attempts in Elasticsearch.
-It is possible, if needed, to query the results of the poller from the previous days for a specific service. 
+I think it would be nice to see the responses of the poller over time, so I saved all attempts in Elasticsearch. It is
+possible, if needed, to query the results of the poller from the previous days for a specific service.
 
-Docker Compose: 
-Only for test propose. It will spin up an elasticsearch and kibana dashboard containers.
-I thought it would be nice to have a way to see the data collected in a dashboard. Not asked! but an extra ;)  
+Docker Compose:
+Only for test propose. It will spin up an elasticsearch and kibana dashboard containers. I thought it would be nice to
+have a way to see the data collected in a dashboard. Not asked! but an extra ;)
 
 ## How to build?
+
 Clone this repo into new project folder (e.g., `kry-service-poller`).
 
 ```bash
@@ -57,7 +59,7 @@ cd kry-code-test
 ```
 
 Run gradle command to build and run the tests.
-**Note:** (A docker container running MySQL database will start on your computer) 
+**Note:** (A docker container running MySQL database will start on your computer)
 
 ```bash
 ./gradlew clean build
@@ -65,33 +67,45 @@ Run gradle command to build and run the tests.
 
 ## How to use?
 
-####Starting the Application
+### Starting the Application
+
 ```bash
 ./gradlew bootRun 
 ```
 
-####Check the service is running and health!  \O/ 
+### Check the service is running and health!  \O/
+
 ```bash
 curl --request GET  --url http://localhost:8081/health 
 ```
+
 Or
+
 ```bash
 curl --request GET --url http://localhost:8081/info 
 ```
 
-####See the data in Kibana!
+### See the data in Kibana!
+
 * Go to your favorite browser and type the url http://localhost:5601
 * Find the option 'Dev Tools' on the left menu
-* Type the following command in the console: 
+* Type the following command in the console:
+
+![plot](./examples/kibana_dashboard.png "Title")
 
 ```
  GET service-result-latest/_search
 ```
 
-####I want to use API's!
+### I want to use API's!
 
 No problem: Access the [swagger-ui](http://localhost:8080/swagger-ui/) link to see all the available API's
 
-#### Available users
-* user:pasword
-* admin:pasword
+### Available users (A login form will be prompt to you)
+
+|username|password|role|
+|-----------|----------|-----------|
+| user      | password | ROLE_USER
+| admin     | password | ROLE_ADMIN
+
+![plot](./examples/swagger_api.png)
