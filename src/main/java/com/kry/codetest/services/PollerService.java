@@ -29,6 +29,12 @@ public class PollerService {
                          .subscribe();
     }
 
+    public Mono<PokeResult> pollServices(String serviceName) {
+        return serviceRepository.findById(serviceName)
+                         .flatMap(this::pokeService)
+                         .flatMap(pokeRepository::save);
+    }
+
     private Mono<PokeResult> pokeService(Service service) {
         return client.get()
                      .uri(service.getUri())

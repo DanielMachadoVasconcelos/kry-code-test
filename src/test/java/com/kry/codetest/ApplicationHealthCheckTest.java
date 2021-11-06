@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.net.URI;
 
@@ -15,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@WithMockUser(username = "admin", roles = {"ADMIN"})
 class ApplicationHealthCheckTest {
 
     @LocalManagementPort
@@ -24,8 +26,15 @@ class ApplicationHealthCheckTest {
     private TestRestTemplate template;
 
     @Test
-    public void testThatHealthEndpointsDontNeedAuth() throws Exception {
-        var healthUri = new URI(String.format("http://localhost:%s/health", randomManagementPort));
+    public void testThatHealthEndpointsDontNeedAdminAuth() throws Exception {
+        var healthUri = new URI(String.format("http://localhost:%s/actuator/health", randomManagementPort));
+        var response = template.getForEntity(healthUri, String.class);
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    public void testThatMetricsEndpointsNeedAdminAuth() throws Exception {
+        var healthUri = new URI(String.format("http://localhost:%s/actuator/metrics", randomManagementPort));
         var response = template.getForEntity(healthUri, String.class);
         assertEquals(response.getStatusCode(), HttpStatus.OK);
     }

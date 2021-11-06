@@ -6,5 +6,5 @@ import reactor.core.publisher.Flux;
 
 public interface PokeRepository extends ReactiveCrudRepository<PokeResult, String> {
 
-    Flux<PokeResult> findAllByService_ServiceName(String serviceName);
+    Flux<PokeResult> findAllByService_ServiceNameAndService_UsernameOrderByPerformedAt(String serviceName, String username);
 }

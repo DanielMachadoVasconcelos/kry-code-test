@@ -2,12 +2,31 @@
 
 ## Daniel Machado Vasconcelos 
 
-### Basic requirements:
+### Basic requirements (that were implemented):
 
 * A user needs to be able to add a new service with URL and a name
 * Added services have to be kept when the server is restarted
 * Display the name, url, creation time and status for each service
 * Provide a README in english with instructions on how to run the application
+
+### Extra requirements (that were implemented):
+
+* We want full create/update/delete functionality for services;
+* The service properly handles concurrent writes;
+* URL Validation ("sdgf" is probably not a valid service),
+* Protect the poller from misbehaving services (for example answering really slowly),
+* Multi user support. Users should not see the services added by another user,
+
+### Extra requirements (not requested but a nice extra to have):
+
+* Custom client errors responses;
+* Swagger documentation;
+* Expose metrics with spring boot actuator;
+
+### Extra requirements to be done:
+
+* The results from the poller are automatically shown to the user (no need to reload the page to see results)
+* We want to have informative and nice looking animations on add/remove services
 
 Prerequisites
 -------------
@@ -57,7 +76,7 @@ curl --request GET  --url http://localhost:8081/health
 ```
 Or
 ```bash
-curl --request GET --url http://localhost:8081/ping 
+curl --request GET --url http://localhost:8081/info 
 ```
 
 ####See the data in Kibana!
@@ -72,3 +91,7 @@ curl --request GET --url http://localhost:8081/ping
 ####I want to use API's!
 
 No problem: Access the [swagger-ui](http://localhost:8080/swagger-ui/) link to see all the available API's
+
+#### Available users
+* user:pasword
+* admin:pasword
