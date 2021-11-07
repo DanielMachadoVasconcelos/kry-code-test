@@ -91,11 +91,13 @@ curl --request GET --url http://localhost:8081/info
 * Find the option 'Dev Tools' on the left menu
 * Type the following command in the console:
 
-![plot](./examples/kibana_dashboard.png "Title")
-
 ```
  GET service-result-latest/_search
 ```
+
+* You can also check the data in a nice graphic on the Dashboard menu: 
+![plot](./examples/kibana_dashboard.png "Title")
+
 
 ### I want to use API's!
 
