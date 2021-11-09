@@ -22,7 +22,7 @@ public class SecurityConfiguration {
                 .accessDeniedHandler((swe, e) -> Mono.fromRunnable(() -> swe.getResponse().setStatusCode(HttpStatus.FORBIDDEN)))
                 .and()
                 .authorizeExchange()
-                .pathMatchers("/","/resources/**", "/resources/static/**","/resources/webapp/**")
+                .pathMatchers("/","/resources/**", "/resources/static/**","/resources/static/dist/**", "/resources/webapp/**")
                 .permitAll()
                 .pathMatchers("/services/**").hasAuthority("ROLE_USER")
                 .pathMatchers("/services/**").hasAuthority("ROLE_ADMIN")
