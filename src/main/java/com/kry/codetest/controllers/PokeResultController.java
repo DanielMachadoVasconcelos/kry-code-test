@@ -6,7 +6,6 @@ import com.kry.codetest.repositories.PokeRepository;
 import com.kry.codetest.services.PollerService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +38,6 @@ public class PokeResultController {
                          .takeLast(limit);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(path = "/{serviceName}/poke")
     private Mono<PokeResult> pokeServiceUri(@PathVariable @NotBlank String serviceName) {
         return pollerService.pollServices(serviceName);
