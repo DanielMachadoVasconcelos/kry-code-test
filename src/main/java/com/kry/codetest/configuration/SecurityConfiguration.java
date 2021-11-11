@@ -16,8 +16,7 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-        return http.cors().disable()
-                .csrf().disable()
+        return http.csrf().disable()
                 .exceptionHandling()
                 .accessDeniedHandler((swe, e) -> Mono.fromRunnable(() -> swe.getResponse().setStatusCode(HttpStatus.FORBIDDEN)))
                 .and()
@@ -26,8 +25,11 @@ public class SecurityConfiguration {
                 .pathMatchers("/services/**").hasAuthority("ROLE_ADMIN")
                 .pathMatchers("/actuator/**").hasAuthority("ROLE_ADMIN")
                 .anyExchange().authenticated()
-                .and().formLogin()
-                .and().build();
+                .and()
+                .httpBasic()
+                .and()
+                .formLogin().disable()
+                .build();
     }
 
     /**
