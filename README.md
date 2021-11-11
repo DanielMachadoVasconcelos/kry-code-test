@@ -28,6 +28,11 @@
 * The results from the poller are automatically shown to the user (no need to reload the page to see results)
 * We want to have informative and nice looking animations on add/remove services
 
+---
+> **_NOTE:_**  PLease see the other repository. 
+> I tried to implement those requirements, but it is not my best code, so I consider not implemented. :disappointed:
+( [front-end repository](https://github.com/DanielMachadoVasconcelos/kry-code-test-front-end) )
+---
 Prerequisites
 -------------
 
@@ -37,17 +42,21 @@ Prerequisites
 
 ### Architectural Decisions
 
-Framework:
+**Framework**:
 Spring Boot with webflux, running on netty, and accessing the database with reactive repositories. I noticed the
 exercise is driving to a reactive approach. So that is why I used Spring Boot Web Flux with Reactive JPA
 
-Database:
+**Database**:
 I think it would be nice to see the responses of the poller over time, so I saved all attempts in Elasticsearch. It is
 possible, if needed, to query the results of the poller from the previous days for a specific service.
 
-Docker Compose:
+**Docker Compose**:
 Only for test propose. It will spin up an elasticsearch and kibana dashboard containers. I thought it would be nice to
 have a way to see the data collected in a dashboard. Not asked! but an extra ;)
+
+**Front-End**:
+I decided to create a separate repository for the front-end. I guess this is the best practices of the market. Different teams can work separately. 
+I place a attempt of a good front end [here](https://github.com/DanielMachadoVasconcelos/kry-code-test-front-end)
 
 ## How to build?
 
@@ -59,7 +68,7 @@ cd kry-code-test
 ```
 
 Run gradle command to build and run the tests.
-**Note:** (A docker container running MySQL database will start on your computer)
+**Note:** (A docker container running Elasticsearch database will start on your computer)
 
 ```bash
 ./gradlew clean build
@@ -103,7 +112,7 @@ curl --request GET --url http://localhost:8081/info
 
 No problem: Access the [swagger-ui](http://localhost:8080/swagger-ui/) link to see all the available API's
 
-### Available users (A login form will be prompt to you)
+### Available users (I am using basic Auth for the sake of simplicity)
 
 |username|password|role|
 |-----------|----------|-----------|
