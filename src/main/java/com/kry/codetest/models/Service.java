@@ -1,17 +1,20 @@
 package com.kry.codetest.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.With;
+import org.elasticsearch.index.VersionType;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.core.query.SeqNoPrimaryTerm;
 
 import javax.validation.constraints.NotBlank;
 import java.time.OffsetDateTime;
@@ -21,7 +24,7 @@ import java.time.OffsetDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(indexName = "sample")
+@Document(indexName = "services", versionType = VersionType.EXTERNAL)
 public class Service {
 
     @Id
