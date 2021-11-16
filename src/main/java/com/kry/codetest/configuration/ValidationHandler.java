@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -41,6 +42,12 @@ public class ValidationHandler {
     }
 
     @ResponseBody
+    @ExceptionHandler(OptimisticLockingFailureException.class)
+    protected ResponseEntity<?> catchAllException(final OptimisticLockingFailureException exception) {
+        return ResponseEntity.unprocessableEntity().build();
+    }
+
+    @ResponseBody
     @ExceptionHandler(Throwable.class)
     protected ResponseEntity<?> catchAllException(final Throwable exception) {
         var nameTage = Tag.of("name", exception.getClass().getSimpleName().toLowerCase());
@@ -48,6 +55,7 @@ public class ValidationHandler {
         meterRegistry.counter(UNHANDLED_EXCEPTIONS_METRIC_NAME, List.of(nameTage, causeTag)).increment();
         return ResponseEntity.status(SC_INTERNAL_SERVER_ERROR).build();
     }
+
 
     @Data
     @Builder
